@@ -29,11 +29,11 @@
 
 **POST /board                 게시글 생성**
   - 헤더 여부 : true
-  - 파라미터 여부 : true (example, { title: ..., content: ...} )
+  - 파라미터 여부 : true (example, ``` { title: ..., content: ...} ``` )
 
 **PUT /board/{seq}            게시글 수정**
   - 헤더 여부 : true
-  - 파라미터 여부 : true (example, { title: ..., content: ...} )
+  - 파라미터 여부 : true (example, ``` { title: ..., content: ...} ``` )
 
 **PATCH /board/{seq}          게시글 좋아요 ( 토글 방식으로 누르면 추가, 또 누르면 제거되는 형식 )**
   - 헤더 여부 : true
