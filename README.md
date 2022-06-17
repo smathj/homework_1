@@ -53,11 +53,11 @@
 
 **POST /user                  사용자 생성**
  - 헤더 여부 : true
- - 파라미터 여부 : O (example, { nickname: ..., account_type: ... } )
+ - 파라미터 여부 : O (example, ```{ nickname: ..., account_type: ... } ``` )
 
 **PATCH /user{id}             사용자 수정 ( 닉네임만 수정 가능합니다, account_type은 고정이라 생각하였습니다.)**
  - 헤더 여부 : true
- - 파라미터 여부 : O (example, { nickname: ... } )
+ - 파라미터 여부 : O (example, ``` { nickname: ... } ``` )
 
 **DELETE /user/{id}           사용자 삭제 ( quit 칼럼을 1로 수정하는 형식 )**
  - 헤더 여부 : true
