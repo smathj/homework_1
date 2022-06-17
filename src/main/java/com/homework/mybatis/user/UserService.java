@@ -29,9 +29,9 @@ public class UserService {
         result.put("apiTime", dateFormat.format(new Date()));
 
         try {
-            int isExist = userDao.findCountByIdAndAccountType(userDtoParam);
+            int isExist = userDao.userCountByIdAndAccountTypeAndQuit(userDtoParam);
             if (isExist != 1) throw new Exception("존재하지 않는 사용자이거나 삭제된 사용자 입니다, 파라미터를 확인해 주십시오.");
-            result.put("userList", userDao.list());
+            result.put("userList", userDao.userlist());
             result.put("success", "true");
             return result;
 
@@ -85,7 +85,7 @@ public class UserService {
             userDtoParam.setNickname(objectMapper.readValue(jsonText, UserDto.class).getNickname());
 
             // 존재 체크 ( 미 삭제 )
-            int isExist = userDao.findCountByIdAndAccountType(userDtoParam);
+            int isExist = userDao.userCountByIdAndAccountTypeAndQuit(userDtoParam);
             if (isExist != 1) throw new Exception("존재하지 않는 사용자이거나 삭제된 사용자 입니다, 파라미터를 확인해 주십시오.");
 
             // 사용자 수정
@@ -109,7 +109,7 @@ public class UserService {
         try {
 
             // 존재 체크 ( 미 삭제 )
-            int isExist = userDao.findCountByIdAndAccountType(userDtoParam);
+            int isExist = userDao.userCountByIdAndAccountTypeAndQuit(userDtoParam);
             if (isExist != 1) throw new Exception("존재하지 않는 사용자이거나 삭제된 사용자 입니다, 파라미터를 확인해 주십시오.");
 
             // 사용자 삭제
@@ -133,7 +133,7 @@ public class UserService {
         try {
 
             // 존재 체크 ( 미 삭제 )
-            int isExist = userDao.findCountById(userDtoParam);
+            int isExist = userDao.userCountById(userDtoParam);
             if (isExist != 1) throw new Exception("존재하지 않는 사용자이거나, 파라미터를 확인해 주십시오.");
 
             // 사용자 수정

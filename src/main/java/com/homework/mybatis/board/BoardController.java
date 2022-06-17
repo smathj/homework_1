@@ -132,6 +132,12 @@ public class BoardController {
     }
 
 
+    /**
+     * 게시글 삭제
+     * @param header
+     * @param seq
+     * @return
+     */
     @DeleteMapping("/board/{seq}")
     public ResponseEntity<?> updateBoard(@RequestHeader Map<String, String> header,
                                          @PathVariable("seq") int seq) {

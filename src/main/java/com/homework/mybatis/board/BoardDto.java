@@ -17,11 +17,12 @@ public class BoardDto {
     private String create_date;     // 작성일
     private String update_date;     // 수정일
     private String delete_date;     // 삭제일
-    private String full_name;       // 풀네임
+    private int delete_yn;          // 삭제 여부
+    
 
     // virtual
     private int like_it;            // 자신이 누른 좋아요 1, 안누름 0
     private int like_count;         // 좋아요 수
-
+    private String full_name;       // 풀네임
 
 }

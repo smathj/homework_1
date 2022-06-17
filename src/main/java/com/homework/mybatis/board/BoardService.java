@@ -116,7 +116,7 @@ public class BoardService {
             boardParamDto.setContent(jsonParamDto.getContent());
 
             // 사용자 검증
-            int userIsExist = userDao.findCountByIdAndAccountType(userDto);
+            int userIsExist = userDao.userCountByIdAndAccountTypeAndQuit(userDto);
             if(userIsExist != 1) throw new Exception("사용자 정보가 올바르지 않습니다, 헤더를 확인해 주십시오.");
 
 
@@ -147,7 +147,7 @@ public class BoardService {
             boardParamDto.setContent(jsonParamDto.getContent());
 
             // 사용자 검증
-            int userIsExist = userDao.findCountByIdAndAccountType(userDto);
+            int userIsExist = userDao.userCountByIdAndAccountTypeAndQuit(userDto);
             if(userIsExist != 1) throw new Exception("사용자 정보가 올바르지 않습니다, 헤더를 확인해 주십시오.");
 
             // 게시글 수정
@@ -180,7 +180,7 @@ public class BoardService {
 
         try {
             // 사용자 검증
-            int userIsExist = userDao.findCountByIdAndAccountType(userDto);
+            int userIsExist = userDao.userCountByIdAndAccountTypeAndQuit(userDto);
             if(userIsExist != 1) throw new Exception("사용자 정보가 올바르지 않습니다, 헤더를 확인해 주십시오.");
 
             // 게시글 확인
@@ -242,7 +242,7 @@ public class BoardService {
 
         try {
             // 사용자 존재 조회 ( 삭제 x )
-            int userIsExist = userDao.findCountByIdAndAccountType(userDto);
+            int userIsExist = userDao.userCountByIdAndAccountTypeAndQuit(userDto);
             if(userIsExist != 1) throw new Exception("사용자 정보가 올바르지 않습니다, 헤더를 확인해 주십시오.");
 
 

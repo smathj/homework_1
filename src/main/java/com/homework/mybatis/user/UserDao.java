@@ -7,10 +7,9 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    List<UserDto> list();
+    List<UserDto> userlist();
 
-    UserDto findById(UserDto userDtoParam);
-    int findCountById(UserDto userDtoParam);
+    int userCountById(UserDto userDtoParam);
 
     int userNickNameUpdate(UserDto userDtoParam);
 
@@ -18,5 +17,5 @@ public interface UserDao {
 
     int userDelete(UserDto userDtoParam);
     int userCreate(UserDto userDtoParam);
-    int findCountByIdAndAccountType(UserDto userDto);
+    int userCountByIdAndAccountTypeAndQuit(UserDto userDto);
 }

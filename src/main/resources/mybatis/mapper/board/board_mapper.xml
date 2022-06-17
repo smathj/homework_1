@@ -9,9 +9,9 @@
         select B.seq,
                B.title,
                CASE U.account_type
-                   when 'LESSOR' then concat(U.nickname,'(','임대인', ')')
-                   when 'REALTOR' then concat(U.nickname,'(','공인 중개사', ')')
-                   when 'LESSEE' then concat(U.nickname,'(','임차인', ')')
+                   when 'LESSOR' then concat(U.nickname,'(','임대인', ') 사용자')
+                   when 'REALTOR' then concat(U.nickname,'(','공인 중개사', ') 사용자')
+                   when 'LESSEE' then concat(U.nickname,'(','임차인', ') 사용자')
                    END as full_name,
                B.content,
                B.writer,
@@ -21,6 +21,7 @@
         from board B
         left join user U
          on B.writer = U.id
+        where B.delete_yn = 0
     </select>
 
 
@@ -61,13 +62,14 @@
     <update id="boardLike" parameterType="board">
         update board
          set likes = #{likes}
-        where seq    = #{seq}
+        where seq  = #{seq}
     </update>
 
 
     <update id="boardDelete" parameterType="board">
         update board
         set delete_date = #{delete_date}
+            delete_yn   = 1
         where seq    = #{seq}
          and writer = #{writer}
     </update>
