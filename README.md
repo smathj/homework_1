@@ -77,11 +77,13 @@
 
 그외 수정,삭제는 data 라는 프로퍼티를 제공하지 않습니다
 
+에러가 발생했을때는 message 프로퍼티에 에러 메세지가 나옵니다
 
     { 
       data?: [...] or {...},
       success: true or false,
-      apiTime: 2022-06-18 01:11:22
+      apiTime: 2022-06-18 01:11:22,
+      message?: ...
     }
 
 
