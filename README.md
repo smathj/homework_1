@@ -83,10 +83,10 @@
 에러가 발생했을때는 message 프로퍼티에 에러 메세지가 나옵니다
 
     { 
-      data?: [...] or {...},
-      success: true or false,
-      apiTime: 2022-06-18 01:11:22,
-      message?: ...
+      data?: [...] or {...},                // 데이터(select 시에 사용됨)
+      success: true or false,               // API 성공여부
+      apiTime: 2022-06-18 01:11:22,         // APi Time
+      message?: ...                         // Error 메세지(API 파라미터나, 잘못된 정보를 보냈을때 사용됨)
     }
 
 
