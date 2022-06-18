@@ -32,11 +32,11 @@
 
 **POST /board                 게시글 생성**
   - 헤더 여부 : true
-  - 파라미터 여부 : true (example, { title: ..., content: ...} )
+  - 파라미터 여부 : true (example, ``` { title: ..., content: ...} ``` )
 
 **PUT /board/{seq}            게시글 수정**
   - 헤더 여부 : true
-  - 파라미터 여부 : true (example, { title: ..., content: ...} )
+  - 파라미터 여부 : true (example, ``` { title: ..., content: ...} ``` )
 
 **PATCH /board/{seq}          게시글 좋아요 ( 토글 방식으로 누르면 추가, 또 누르면 제거되는 형식 )**
   - 헤더 여부 : true
@@ -56,11 +56,11 @@
 
 **POST /user                  사용자 생성**
  - 헤더 여부 : true
- - 파라미터 여부 : O (example, { nickname: ..., account_type: ... } )
+ - 파라미터 여부 : O (example, ```{ nickname: ..., account_type: ... } ``` )
 
 **PATCH /user{id}             사용자 수정 ( 닉네임만 수정 가능합니다, account_type은 고정이라 생각하였습니다.)**
  - 헤더 여부 : true
- - 파라미터 여부 : O (example, { nickname: ... } )
+ - 파라미터 여부 : O (example, ``` { nickname: ... } ``` )
 
 **DELETE /user/{id}           사용자 삭제 ( quit 칼럼을 1로 수정하는 형식 )**
  - 헤더 여부 : true
@@ -80,11 +80,13 @@
 
 그외 수정,삭제는 data 라는 프로퍼티를 제공하지 않습니다
 
+에러가 발생했을때는 message 프로퍼티에 에러 메세지가 나옵니다
 
     { 
       data?: [...] or {...},
       success: true or false,
-      apiTime: 2022-06-18 01:11:22
+      apiTime: 2022-06-18 01:11:22,
+      message?: ...
     }
 
 
@@ -103,7 +105,14 @@ JPA는 맛만봐본 상태입니다.
 
 
 
+아쉬운점.
 
+인터셉터를 이용해서 들어오는 header와 리턴하는 데이터를 가공했으면 어땟을까 합니다
+최근 NestJs를 이용한 쏘카 프로젝트에서 그렇게 사용했었는데 만들고나니 아쉽네요.
+
+Exception도 마찬가지입니다.
+
+하지만 저에게 유익한 시간이였습니다.
 
 
 
