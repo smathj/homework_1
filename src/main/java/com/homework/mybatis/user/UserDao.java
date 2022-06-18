@@ -7,15 +7,15 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    List<UserDto> userlist();
+    List<UserDto> selectUserList();
 
-    int userCountById(UserDto userDtoParam);
+    int selectUserCountById(UserDto userDtoParam);
 
-    int userNickNameUpdate(UserDto userDtoParam);
+    int updateUserNickName(UserDto userDtoParam);
 
-    int userRecovery(UserDto userDtoParam);
+    int selectUserRecovery(UserDto userDtoParam);
 
-    int userDelete(UserDto userDtoParam);
-    int userCreate(UserDto userDtoParam);
-    int userCountByIdAndAccountTypeAndQuit(UserDto userDto);
+    int deleteUser(UserDto userDtoParam);
+    int insertUser(UserDto userDtoParam);
+    int selectUserCountByIdAndAccountTypeAndQuit(UserDto userDto);
 }

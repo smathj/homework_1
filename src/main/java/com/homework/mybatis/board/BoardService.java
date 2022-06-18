@@ -27,7 +27,7 @@ public class BoardService {
      * @param userDto
      * @return
      */
-    public Map<String,Object> boardList(UserDto userDto) {
+    public Map<String,Object> selectBoardList(UserDto userDto) {
 
         Map<String,Object> result = new HashMap<>();
         result.put("success", "false");
@@ -37,7 +37,7 @@ public class BoardService {
             String user_id = String.valueOf(userDto.getId());
             
             // 게시글 전체 조회
-            List<BoardDto> boardList = boardDao.list();
+            List<BoardDto> boardList = boardDao.selectBoardList();
 
             boardList.forEach((board) -> {
 
@@ -68,7 +68,7 @@ public class BoardService {
 
     }
 
-    public Map<String,Object> boardFindBySeq(BoardDto boardDto, UserDto userDto) {
+    public Map<String,Object> selectBoardBySeq(BoardDto boardDto, UserDto userDto) {
 
         Map<String,Object> result = new HashMap<>();
         result.put("success", "false");
@@ -76,7 +76,7 @@ public class BoardService {
 
         try {
             String user_id = String.valueOf(userDto.getId());
-            BoardDto boardDetail = boardDao.boardFindBySeq(boardDto);
+            BoardDto boardDetail = boardDao.selectBoardBySeq(boardDto);
 
             // 내부인일때, 자신이 눌렀다면,  like_it = 1
             if(user_id != null) {
@@ -103,7 +103,7 @@ public class BoardService {
 
     }
 
-    public Map<String,String> boardCreate(String jsonText, BoardDto boardParamDto, UserDto userDto) {
+    public Map<String,String> insertBoard(String jsonText, BoardDto boardParamDto, UserDto userDto) {
 
         Map<String,String> result = new HashMap<>();
         result.put("success", "false");
@@ -116,12 +116,12 @@ public class BoardService {
             boardParamDto.setContent(jsonParamDto.getContent());
 
             // 사용자 검증
-            int userIsExist = userDao.userCountByIdAndAccountTypeAndQuit(userDto);
+            int userIsExist = userDao.selectUserCountByIdAndAccountTypeAndQuit(userDto);
             if(userIsExist != 1) throw new Exception("사용자 정보가 올바르지 않습니다, 헤더를 확인해 주십시오.");
 
 
             // 게시글 작성
-            int boardResult = boardDao.boardCreate(boardParamDto);
+            int boardResult = boardDao.insertBoard(boardParamDto);
             if(boardResult != 1) throw new Exception("게시글 작성중 에러가 발생하였습니다, 파라미터를 확인해 주십시오.");
 
             result.put("success", "true");
@@ -147,11 +147,11 @@ public class BoardService {
             boardParamDto.setContent(jsonParamDto.getContent());
 
             // 사용자 검증
-            int userIsExist = userDao.userCountByIdAndAccountTypeAndQuit(userDto);
+            int userIsExist = userDao.selectUserCountByIdAndAccountTypeAndQuit(userDto);
             if(userIsExist != 1) throw new Exception("사용자 정보가 올바르지 않습니다, 헤더를 확인해 주십시오.");
 
             // 게시글 수정
-            int boardResult = boardDao.boardUpdate(boardParamDto);
+            int boardResult = boardDao.updateBoard(boardParamDto);
             if(boardResult != 1) throw new Exception("게시글 수정중 에러가 발생하였습니다, 파라미터를 확인해 주십시오.");
 
             result.put("success", "true");
@@ -170,7 +170,7 @@ public class BoardService {
      * @param userDto
      * @return
      */
-    public Map<String, String> boardLike(BoardDto boardParamDto, UserDto userDto) {
+    public Map<String, String> updateBoardLike(BoardDto boardParamDto, UserDto userDto) {
 
         Map<String,String> result = new HashMap<>();
         result.put("success", "false");
@@ -180,15 +180,15 @@ public class BoardService {
 
         try {
             // 사용자 검증
-            int userIsExist = userDao.userCountByIdAndAccountTypeAndQuit(userDto);
+            int userIsExist = userDao.selectUserCountByIdAndAccountTypeAndQuit(userDto);
             if(userIsExist != 1) throw new Exception("사용자 정보가 올바르지 않습니다, 헤더를 확인해 주십시오.");
 
             // 게시글 확인
-            int boardResult = boardDao.boardCountFindBySeq(boardParamDto);
+            int boardResult = boardDao.selectBoardCountBySeq(boardParamDto);
             if(boardResult != 1) throw new Exception("존재하지 않는 게시글입니다, 파라미터를 확인해 주십시오.");
 
             // 게시글 가져오기
-            BoardDto oldBoardDto = boardDao.boardFindBySeq(boardParamDto);
+            BoardDto oldBoardDto = boardDao.selectBoardBySeq(boardParamDto);
 
             // 새로운 좋아요 리스트
             ArrayList<String> likeUsersArr = new ArrayList<>();
@@ -221,7 +221,7 @@ public class BoardService {
             boardParamDto.setLikes(newLikeUserStr);
 
             // 좋아요 업데이트
-            int likeBoard = boardDao.boardLike(boardParamDto);
+            int likeBoard = boardDao.updateBoardLike(boardParamDto);
             if(likeBoard != 1) throw new Exception("좋아요 업데이트에 오류가 발생했습니다, 파라미터를 확인해 주십시오.");
 
             result.put("success", "true");
@@ -234,7 +234,7 @@ public class BoardService {
         }
     }
 
-    public Map<String, String> boardDelete(BoardDto boardParamDto, UserDto userDto) {
+    public Map<String, String> deleteBoard(BoardDto boardParamDto, UserDto userDto) {
 
         Map<String,String> result = new HashMap<>();
         result.put("success", "false");
@@ -242,20 +242,20 @@ public class BoardService {
 
         try {
             // 사용자 존재 조회 ( 삭제 x )
-            int userIsExist = userDao.userCountByIdAndAccountTypeAndQuit(userDto);
+            int userIsExist = userDao.selectUserCountByIdAndAccountTypeAndQuit(userDto);
             if(userIsExist != 1) throw new Exception("사용자 정보가 올바르지 않습니다, 헤더를 확인해 주십시오.");
 
 
             // 게시글 확인
-            int boardResult = boardDao.boardCountFindBySeqAndWriter(boardParamDto);
+            int boardResult = boardDao.selectBoardCountBySeqAndWriter(boardParamDto);
             if(boardResult != 1) throw new Exception("자신의 게시글이 아닙니다, 파라미터를 확인해 주십시오.");
 
             // 게시글 삭제
             String delete_date = dateFormat.format(new Date());
 
             boardParamDto.setDelete_date(delete_date);
-            int boardDelete = boardDao.boardDelete(boardParamDto);
-            if(boardDelete != 1) throw new Exception("게시글 삭제 에러가 발생하였습니다, 파라미터를 확인해 주십시오.");
+            int deleteBoard = boardDao.deleteBoard(boardParamDto);
+            if(deleteBoard != 1) throw new Exception("게시글 삭제 에러가 발생하였습니다, 파라미터를 확인해 주십시오.");
 
             result.put("success", "true");
             return result;

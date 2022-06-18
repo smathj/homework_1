@@ -21,13 +21,13 @@ public class UserController {
      * @return
      */
     @GetMapping("/user")
-    public ResponseEntity<?> userList(@RequestHeader Map<String, String> header) {
+    public ResponseEntity<?> selectUserList(@RequestHeader Map<String, String> header) {
 
         // 헤더에서 계정 타입, 계정 아이디 가져오기
         header = CustomHeader.parsingHeader(header);
         UserDto userDtoParam = CustomHeader.getUserData(header);
 
-        Map<String, Object> result = userService.userList(userDtoParam);
+        Map<String, Object> result = userService.selectUserList(userDtoParam);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -36,8 +36,8 @@ public class UserController {
      * @param jsonText
      */
     @PostMapping("/user")
-    public ResponseEntity<?> user(@RequestBody String jsonText) {
-            Map<String, String> resultMap = userService.userCreate(jsonText);
+    public ResponseEntity<?> insertUser(@RequestBody String jsonText) {
+            Map<String, String> resultMap = userService.insertUser(jsonText);
             return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -48,14 +48,14 @@ public class UserController {
      * @return
      */
     @PatchMapping("/user/{id}")
-    public ResponseEntity<?> userUpdate(@RequestHeader Map<String, String> header,
+    public ResponseEntity<?> updateUserNickName(@RequestHeader Map<String, String> header,
                                         @PathVariable("id") int id,
                                         @RequestBody String jsonText) {
         // 헤더에서 계정 타입, 계정 아이디 가져오기
         header = CustomHeader.parsingHeader(header);
         UserDto userDtoParam = CustomHeader.getUserData(header);
 
-        Map<String, String> result = userService.userNickNameUpdate(jsonText, userDtoParam);
+        Map<String, String> result = userService.updateUserNickName(jsonText, userDtoParam);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -66,14 +66,14 @@ public class UserController {
      * @return
      */
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> userDelete(@RequestHeader Map<String, String> header,
+    public ResponseEntity<?> deleteUser(@RequestHeader Map<String, String> header,
                                         @PathVariable("id") int id) {
 
         // 헤더에서 계정 타입, 계정 아이디 가져오기
         header = CustomHeader.parsingHeader(header);
         UserDto userDtoParam = CustomHeader.getUserData(header);
 
-        Map<String, String> result = userService.userDelete(userDtoParam);
+        Map<String, String> result = userService.deleteUser(userDtoParam);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -85,14 +85,14 @@ public class UserController {
      * @return
      */
     @PatchMapping("/user/{id}/recovery")
-    public ResponseEntity<?> userRecovery(@RequestHeader Map<String, String> header,
+    public ResponseEntity<?> selectUserRecovery(@RequestHeader Map<String, String> header,
                                         @PathVariable("id") int id) {
 
         // 헤더에서 계정 타입, 계정 아이디 가져오기
         header = CustomHeader.parsingHeader(header);
         UserDto userDtoParam = CustomHeader.getUserData(header);
 
-        Map<String, String> result = userService.userRecovery(userDtoParam);
+        Map<String, String> result = userService.selectUserRecovery(userDtoParam);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

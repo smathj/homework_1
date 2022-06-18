@@ -5,14 +5,14 @@
 <mapper namespace="com.homework.mybatis.board.BoardDao">
 
     <!-- 게시글 조회 -->
-    <select id="list" resultType="board">
+    <select id="selectBoardList" resultType="board">
         select B.seq,
                B.title,
                CASE U.account_type
                    when 'LESSOR' then concat(U.nickname,'(','임대인', ') 사용자')
                    when 'REALTOR' then concat(U.nickname,'(','공인 중개사', ') 사용자')
                    when 'LESSEE' then concat(U.nickname,'(','임차인', ') 사용자')
-                   END as full_name,
+               END as full_name,
                B.content,
                B.writer,
                B.likes,
@@ -24,33 +24,37 @@
         where B.delete_yn = 0
     </select>
 
-
-    <select id="boardFindBySeq" resultType="board">
+    <!-- 게시글 상세 조회 -->
+    <select id="selectBoardBySeq" resultType="board">
         select *
         from board
         where seq=#{seq}
     </select>
 
-    <select id="boardCountFindBySeq" resultType="int">
+    <!-- 게시글 갯수 by Seq -->
+    <select id="selectBoardCountBySeq" resultType="int">
         select count(*)
         from board
         where seq=#{seq}
     </select>
 
-    <select id="boardCountFindBySeqAndWriter" resultType="int">
+    <!-- 게시글 갯수 조회 by Seq, Writer  -->
+    <select id="selectBoardCountBySeqAndWriter" resultType="int">
         select count(*)
         from board
         where seq    = #{seq}
          and  writer = #{writer}
     </select>
 
-    <insert id="boardCreate" parameterType="board">
+    <!-- 게시글 생성 -->
+    <insert id="insertBoard" parameterType="board">
         insert into board(title, content, writer) values
         (#{title}, #{content}, #{writer})
     </insert>
 
 
-    <update id="boardUpdate" parameterType="board">
+    <!-- 게시글 수정 -->
+    <update id="updateBoard" parameterType="board">
         update board
          set  title    = #{title},
               content  = #{content}
@@ -59,16 +63,18 @@
     </update>
 
 
-    <update id="boardLike" parameterType="board">
+    <!-- 게시글 좋아요 -->
+    <update id="updateBoardLike" parameterType="board">
         update board
          set likes = #{likes}
         where seq  = #{seq}
     </update>
 
 
-    <update id="boardDelete" parameterType="board">
+    <!-- 게시글 삭제 -->
+    <update id="deleteBoard" parameterType="board">
         update board
-        set delete_date = #{delete_date}
+        set delete_date = #{delete_date},
             delete_yn   = 1
         where seq    = #{seq}
          and writer = #{writer}

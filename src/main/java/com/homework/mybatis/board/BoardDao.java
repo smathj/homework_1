@@ -7,16 +7,16 @@ import java.util.List;
 @Mapper
 public interface BoardDao {
 
-    List<BoardDto> list();
+    List<BoardDto> selectBoardList();
 
-    BoardDto boardFindBySeq(BoardDto boardParamDto);
+    BoardDto selectBoardBySeq(BoardDto boardParamDto);
 
-    int boardCountFindBySeq(BoardDto boardParamDto);
-    int boardCountFindBySeqAndWriter(BoardDto boardParamDto);
-    int boardCreate(BoardDto boardParamDto);
+    int selectBoardCountBySeq(BoardDto boardParamDto);
+    int selectBoardCountBySeqAndWriter(BoardDto boardParamDto);
+    int insertBoard(BoardDto boardParamDto);
 
-    int boardUpdate(BoardDto boardParamDto);
-    int boardLike(BoardDto boardParamDto);
+    int updateBoard(BoardDto boardParamDto);
+    int updateBoardLike(BoardDto boardParamDto);
 
-    int boardDelete(BoardDto boardParamDto);
+    int deleteBoard(BoardDto boardParamDto);
 }

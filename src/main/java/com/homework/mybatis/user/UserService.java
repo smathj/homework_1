@@ -23,15 +23,16 @@ public class UserService {
      * @param userDtoParam
      * @return
      */
-    public Map<String, Object> userList(UserDto userDtoParam) {
+    public Map<String, Object> selectUserList(UserDto userDtoParam) {
         Map<String, Object> result = new HashMap<>();
         result.put("success", "false");
         result.put("apiTime", dateFormat.format(new Date()));
 
         try {
-            int isExist = userDao.userCountByIdAndAccountTypeAndQuit(userDtoParam);
+            int isExist = userDao.selectUserCountByIdAndAccountTypeAndQuit(userDtoParam);
             if (isExist != 1) throw new Exception("존재하지 않는 사용자이거나 삭제된 사용자 입니다, 파라미터를 확인해 주십시오.");
-            result.put("userList", userDao.userlist());
+            List<UserDto> userList = userDao.selectUserList();
+            result.put("userList", userList);
             result.put("success", "true");
             return result;
 
@@ -48,7 +49,7 @@ public class UserService {
      * @param jsonText
      * @return
      */
-    public Map<String, String> userCreate(String jsonText) {
+    public Map<String, String> insertUser(String jsonText) {
         Map<String, String> result = new HashMap<>();
         result.put("success", "false");
         result.put("apiTime", dateFormat.format(new Date()));
@@ -62,7 +63,7 @@ public class UserService {
             }
 
             // 사용자 생성
-            int isCreate = userDao.userCreate(userDtoParam);
+            int isCreate = userDao.insertUser(userDtoParam);
             if (isCreate != 1) throw new Exception("사용자 생성 에러가 발생하였습니다, 파라미터를 확인해 주십시오.");
 
             result.put("success", "true");
@@ -76,7 +77,7 @@ public class UserService {
 
     }
 
-    public Map<String, String> userNickNameUpdate(String jsonText, UserDto userDtoParam) {
+    public Map<String, String> updateUserNickName(String jsonText, UserDto userDtoParam) {
         Map<String, String> result = new HashMap<>();
         result.put("success", "false");
         result.put("apiTime", dateFormat.format(new Date()));
@@ -85,11 +86,11 @@ public class UserService {
             userDtoParam.setNickname(objectMapper.readValue(jsonText, UserDto.class).getNickname());
 
             // 존재 체크 ( 미 삭제 )
-            int isExist = userDao.userCountByIdAndAccountTypeAndQuit(userDtoParam);
+            int isExist = userDao.selectUserCountByIdAndAccountTypeAndQuit(userDtoParam);
             if (isExist != 1) throw new Exception("존재하지 않는 사용자이거나 삭제된 사용자 입니다, 파라미터를 확인해 주십시오.");
 
             // 사용자 수정
-            int isCreate = userDao.userNickNameUpdate(userDtoParam);
+            int isCreate = userDao.updateUserNickName(userDtoParam);
             if (isCreate != 1) throw new Exception("사용자 수정 에러가 발생하였습니다, 파라미터를 확인해 주십시오.");
 
             result.put("success", "true");
@@ -102,18 +103,18 @@ public class UserService {
         }
     }
 
-    public Map<String, String> userDelete(UserDto userDtoParam) {
+    public Map<String, String> deleteUser(UserDto userDtoParam) {
         Map<String, String> result = new HashMap<>();
         result.put("success", "false");
         result.put("apiTime", dateFormat.format(new Date()));
         try {
 
             // 존재 체크 ( 미 삭제 )
-            int isExist = userDao.userCountByIdAndAccountTypeAndQuit(userDtoParam);
+            int isExist = userDao.selectUserCountByIdAndAccountTypeAndQuit(userDtoParam);
             if (isExist != 1) throw new Exception("존재하지 않는 사용자이거나 삭제된 사용자 입니다, 파라미터를 확인해 주십시오.");
 
             // 사용자 삭제
-            int isDelete = userDao.userDelete(userDtoParam);
+            int isDelete = userDao.deleteUser(userDtoParam);
             if (isDelete != 1) throw new Exception("사용자 삭제 에러가 발생하였습니다, 파라미터를 확인해 주십시오.");
 
             result.put("success", "true");
@@ -126,18 +127,18 @@ public class UserService {
         }
     }
 
-    public Map<String, String> userRecovery(UserDto userDtoParam) {
+    public Map<String, String> selectUserRecovery(UserDto userDtoParam) {
         Map<String, String> result = new HashMap<>();
         result.put("success", "false");
         result.put("apiTime", dateFormat.format(new Date()));
         try {
 
             // 존재 체크 ( 미 삭제 )
-            int isExist = userDao.userCountById(userDtoParam);
+            int isExist = userDao.selectUserCountById(userDtoParam);
             if (isExist != 1) throw new Exception("존재하지 않는 사용자이거나, 파라미터를 확인해 주십시오.");
 
             // 사용자 수정
-            int isUpdate = userDao.userRecovery(userDtoParam);
+            int isUpdate = userDao.selectUserRecovery(userDtoParam);
             if (isUpdate != 1) throw new Exception("사용자 수정 에러가 발생하였습니다, 파라미터를 확인해 주십시오.");
 
             result.put("success", "true");

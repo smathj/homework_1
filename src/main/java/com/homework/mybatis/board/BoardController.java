@@ -28,7 +28,7 @@ public class BoardController {
         header = CustomHeader.parsingHeader(header);
         UserDto userDto = CustomHeader.getUserData(header);
 
-        Map<String,Object> result = boardService.boardList(userDto);
+        Map<String,Object> result = boardService.selectBoardList(userDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -40,7 +40,7 @@ public class BoardController {
      * @return BoardDto
      */
     @GetMapping("/board/{seq}")
-    public ResponseEntity<?> boardFindBySeq(@RequestHeader Map<String, String> header,
+    public ResponseEntity<?> selectBoardBySeq(@RequestHeader Map<String, String> header,
                                             @PathVariable("seq") int seq) {
 
         // 헤더에서 계정 타입, 계정 아이디 가져오기
@@ -50,7 +50,7 @@ public class BoardController {
         BoardDto boardDto = new BoardDto();
         boardDto.setSeq(seq);
 
-        Map<String,Object> result = boardService.boardFindBySeq(boardDto, userDto);
+        Map<String,Object> result = boardService.selectBoardBySeq(boardDto, userDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -63,7 +63,7 @@ public class BoardController {
      * @return ResponseEntity<?>
      */
     @PostMapping("/board")
-    public ResponseEntity<?> boardCreate(@RequestHeader Map<String, String> header,
+    public ResponseEntity<?> insertBoard(@RequestHeader Map<String, String> header,
                                          @RequestBody String jsonText) {
 
         // 헤더에서 계정 타입, 계정 아이디 가져오기
@@ -73,7 +73,7 @@ public class BoardController {
         // 게시글 작성자, 게시글 생성 서비스
         BoardDto boardParamDto = new BoardDto();
         boardParamDto.setWriter(Integer.valueOf(userDto.getId()));
-        Map<String,String> result = boardService.boardCreate(jsonText, boardParamDto, userDto);
+        Map<String,String> result = boardService.insertBoard(jsonText, boardParamDto, userDto);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
@@ -113,7 +113,7 @@ public class BoardController {
      * @return ResponseEntity<?>
      */
     @PatchMapping("/board/{seq}")
-    public ResponseEntity<?> boardLike(@RequestHeader Map<String, String> header,
+    public ResponseEntity<?> updateBoardLike(@RequestHeader Map<String, String> header,
                                        @PathVariable("seq") int seq) {
 
         // 헤더에서 계정 타입, 계정 아이디 가져오기
@@ -125,7 +125,7 @@ public class BoardController {
         boardParamDto.setSeq(seq);
         boardParamDto.setLikes(String.valueOf(userDto.getId()));
         boardParamDto.setWriter(Integer.valueOf(userDto.getId()));
-        Map<String,String> result = boardService.boardLike(boardParamDto, userDto);
+        Map<String,String> result = boardService.updateBoardLike(boardParamDto, userDto);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
@@ -150,7 +150,7 @@ public class BoardController {
         BoardDto boardParamDto = new BoardDto();
         boardParamDto.setSeq(seq);
         boardParamDto.setWriter(Integer.valueOf(userDto.getId()));
-        Map<String,String> result = boardService.boardDelete(boardParamDto, userDto);
+        Map<String,String> result = boardService.deleteBoard(boardParamDto, userDto);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
